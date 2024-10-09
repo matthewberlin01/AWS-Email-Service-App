@@ -1,0 +1,34 @@
+#serverless.yml is the main config file for this service.
+
+service: skillshareemailapi
+
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  profile: serverlessUser
+  region: us-east-2
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - ses:*
+      Resource: '*'
+
+
+functions:
+  hello:
+    handler: handler.hello
+    events:
+      - http:
+          path: hello-test
+          method: GET
+          cors: true
+  sendEmail:
+    handler: sendEmail.handler
+    events:
+      - http:
+          path: send-email
+          method: POST
+          cors: true
+
